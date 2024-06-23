@@ -1,9 +1,10 @@
-import streamlit as st
 import pandas as pd
 import numpy as np
 import lightgbm as lgb
 import shap
 from sklearn.model_selection import train_test_split
+import streamlit as st
+from streamlit_shap import st_shap
 
 def main():
     st.title('LightGBM App')
@@ -28,12 +29,13 @@ def main():
             'verbose': -1
         }
 
+        # train LightGBM model
         model = lgb.train(params, lgb_train, num_boost_round=50, valid_sets=[lgb_train], valid_names=['train'], callbacks=[lgb.log_evaluation(10)])
 
+        st.write('SHAP summary plot')
         explainer = shap.TreeExplainer(model=model, feature_perturbation='tree_path_dependent')
         shap_values = explainer(x_test)
-        chart_data = {x_train.columns[f]: np.mean(np.abs(shap_values.values[:, f])) for f in range(x_train.shape[1])}
-        st.bar_chart(chart_data)
+        st_shap(shap.plots.bar(shap_values), height=300)
 
 if __name__ == '__main__':
     main()

@@ -1,4 +1,6 @@
 lightgbm
 shap
 numpy<2.0.0
+matplotlib
 streamlit
+streamlit-shap
