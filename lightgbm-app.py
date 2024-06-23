@@ -12,15 +12,14 @@ def main():
     uploaded_file = st.file_uploader('Upload a dataset', type=['csv', 'txt'])
     if uploaded_file is not None:
         df = pd.read_csv(uploaded_file, header=0)
-        # st.write(df)
 
         # dropdown list for target variable
         target_variable = st.selectbox('Select the target variable', df.columns)
 
-        X = df.drop(target_variable, axis=1)
+        x = df.drop(target_variable, axis=1)
         y = df[target_variable]
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
-        lgb_train = lgb.Dataset(X_train, y_train)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=0)
+        lgb_train = lgb.Dataset(x_train, y_train)
 
         params = {
             'objective': 'mse',
@@ -32,8 +31,8 @@ def main():
         model = lgb.train(params, lgb_train, num_boost_round=50, valid_sets=[lgb_train], valid_names=['train'], callbacks=[lgb.log_evaluation(10)])
 
         explainer = shap.TreeExplainer(model=model, feature_perturbation='tree_path_dependent')
-        shap_values = explainer(X_test)
-        chart_data = {X_train.columns[f]: np.mean(np.abs(shap_values.values[:, f])) for f in range(X_train.shape[1])}
+        shap_values = explainer(x_test)
+        chart_data = {x_train.columns[f]: np.mean(np.abs(shap_values.values[:, f])) for f in range(x_train.shape[1])}
         st.bar_chart(chart_data)
 
 if __name__ == '__main__':
