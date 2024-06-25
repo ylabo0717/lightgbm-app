@@ -10,11 +10,13 @@ from streamlit_shap import st_shap
 def main():
     st.title('LightGBM App')
 
-
-
     # LightGBM parameters from User settings
-    st.sidebar.title('LightGBM')
+    st.sidebar.title('Hyper Parameters')
+    learning_rate = st.sidebar.slider('learning_rate', 0.01, 0.5, 0.1)
     num_leaves = st.sidebar.slider('num_leaves', 2, 50, 5)
+    max_depth = st.sidebar.slider('max_depth', -1, 100, -1)
+    min_data_in_leaf = st.sidebar.slider('min_data_in_leaf', 1, 100, 20)
+    min_data_in_bin = st.sidebar.slider('min_data_in_bin', 1, 100, 3)
     num_boost_round = st.sidebar.slider('num_boost_round', 10, 100, 50)
 
     # load dataset from file dialog
@@ -36,8 +38,12 @@ def main():
 
             # LightGBM parameters
             params = {
-                'objective': 'mse',
+                'objective': 'regression',
+                'learning_rate': learning_rate,
                 'num_leaves': num_leaves,
+                'max_depth': max_depth,
+                'min_data_in_leaf': min_data_in_leaf,
+                'min_data_in_bin': min_data_in_bin,
                 'seed': 0,
                 'verbose': -1
             }
