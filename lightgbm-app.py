@@ -54,7 +54,7 @@ def main():
             y_pred = model.predict(x_test, num_iteration=model.best_iteration)
             st.write('RSME', mean_squared_error(y_test, y_pred) ** 0.5)
 
-            st.write('SHAP summary plot')
+            st.write('SHAP summary plot for feature importance')
             explainer = shap.TreeExplainer(model=model, feature_perturbation='tree_path_dependent')
             shap_values = explainer(x_test)
             st_shap(shap.plots.bar(shap_values), height=300)
