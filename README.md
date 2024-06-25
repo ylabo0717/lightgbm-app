@@ -1,7 +1,5 @@
 # lightgbm-app
 
-# Overview
-
 This is a simple web application with Streamlit that uses the LightGBM model.
 
 ![](./images/lightgbm-app.png)
