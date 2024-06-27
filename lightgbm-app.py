@@ -57,6 +57,7 @@ def main():
             st.write('SHAP summary plot for feature importance')
             explainer = shap.TreeExplainer(model=model, feature_perturbation='tree_path_dependent')
             shap_values = explainer(x_test)
+            st_shap(shap.plots.beeswarm(shap_values), height=300)
             st_shap(shap.plots.bar(shap_values), height=300)
 
 if __name__ == '__main__':
