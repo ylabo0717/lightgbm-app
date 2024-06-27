@@ -1,6 +1,6 @@
-lightgbm
-shap
-numpy<2.0.0
-matplotlib
-streamlit
-streamlit-shap
+lightgbm==4.4.0
+shap==0.45.1
+numpy==1.26.4
+matplotlib==3.9.0
+streamlit==1.36.0
+streamlit-shap==1.0.2
