@@ -18,7 +18,7 @@ This is a simple web application with Streamlit that uses the LightGBM model.
 Install the required packages:
 
 ```bash
-pip install -r requirements.txt
+rye sync
 ```
 
 # Usage
@@ -26,7 +26,7 @@ pip install -r requirements.txt
 Run the web application:
 
 ```bash
-streamlit run lightgbm-app.py
+rye run streamlit run ./src/lightgbm_app/main.py
 ```
 
 # License
